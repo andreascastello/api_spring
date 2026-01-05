@@ -1,4 +1,4 @@
-package com.andreascastello.userapi.userapi;
+package com.andreascastello.userapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.andreascastello.userapi.userapi;
+package com.andreascastello.userapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
