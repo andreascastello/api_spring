@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.andreascastello.userapi.dto.UserResponse;
 import com.andreascastello.userapi.dto.UserRequest;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -27,6 +28,12 @@ public class UserController {
     @GetMapping
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    //create a method to get a user by id
+    @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     //create a post mapping to create a user

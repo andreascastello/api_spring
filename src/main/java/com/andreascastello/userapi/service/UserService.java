@@ -7,6 +7,8 @@ import com.andreascastello.userapi.repository.UserRepository;
 import com.andreascastello.userapi.dto.UserRequest;
 import com.andreascastello.userapi.dto.UserResponse;
 import java.util.stream.Collectors;
+import com.andreascastello.userapi.exception.EmailAlreadyExistsException;
+import com.andreascastello.userapi.exception.UserNotFoundException;
 @Service
 public class UserService {
     //inject the UserRepository
@@ -28,12 +30,16 @@ public class UserService {
     //create a method to get a user by id
     public UserResponse getUserById(Long id) {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserNotFoundException());
         return new UserResponse(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCreatedAt());
     }
 
     //create a method to create a user
     public UserResponse createUser(UserRequest userRequest) {
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
+            throw new EmailAlreadyExistsException();
+        }
+        
         User user = new User(userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
         User savedUser = userRepository.save(user);
         return new UserResponse(savedUser.getId(), savedUser.getFirstName(), savedUser.getLastName(), savedUser.getEmail(), savedUser.getCreatedAt());
